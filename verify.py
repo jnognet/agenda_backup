@@ -4,7 +4,7 @@ import locale
 
 locale.setlocale(locale.LC_TIME, "pt_BR")
 
-data_verificacao = datetime.fromisoformat('2024-12-28')
+data_verificacao = datetime.fromisoformat('2024-08-10')
 
 with open('backups.json', 'r', encoding="utf-8") as fout:
     backups = json.load(fout)

@@ -35,8 +35,8 @@ for delta_ano in range(1, relativedelta(data_fim, data_inicio).years):
 # agenda de backups semestral dentro do interstício 
 agenda_semestre = []
 semestres = ((data_fim.year - data_inicio.year) * 12 + (data_fim.month - data_inicio.month)) // 6
-for delta_semestre in range(1, semestres + 1):
-    data_proximo_backup_semestre = data_inicio + relativedelta(months=+(delta_semestre * 6), days=-1) 
+for delta_semestre in range(0, semestres):
+    data_proximo_backup_semestre = data_inicio + relativedelta(months=+3) + relativedelta(months=+(delta_semestre * 6), days=-1) 
     for delta_dia in range(7):
         data_proximo_backup_dia = data_proximo_backup_semestre + relativedelta(days=-delta_dia)
         if data_proximo_backup_dia.weekday() == 5:
@@ -116,6 +116,13 @@ for dia in agenda_intersticio:
             backup = { "data_backup": dia, "dia_backup": dia.strftime("%A"), "frequencia_backup": "diario", "tipo_backup": "incremental", "expiracao_backup": dia + relativedelta(days=+15), "referencia_tipo": "incremental", "referencia_backup": last_incremental }
         backups.append(backup)
         last_incremental = dia
+
+with open('agendas.json', 'w', encoding="utf-8") as fout:
+    json.dump(agenda_ano, fout, indent=4, default=str, ensure_ascii=False)
+    json.dump(agenda_semestre, fout, indent=4, default=str, ensure_ascii=False)
+    json.dump(agenda_mes, fout, indent=4, default=str, ensure_ascii=False)
+    json.dump(agenda_semana, fout, indent=4, default=str, ensure_ascii=False)
+    json.dump(agenda_intersticio, fout, indent=4, default=str, ensure_ascii=False)
 
 with open('backups.json', 'w', encoding="utf-8") as fout:
     json.dump(backups, fout, indent=4, default=str, ensure_ascii=False)
