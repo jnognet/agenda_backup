@@ -36,9 +36,9 @@ for delta_ano in range(1, relativedelta(data_fim, data_inicio).years):
 agenda_semestre = []
 semestres = ((data_fim.year - data_inicio.year) * 12 + (data_fim.month - data_inicio.month)) // 6
 for delta_semestre in range(0, semestres):
-    data_proximo_backup_semestre = data_inicio + relativedelta(months=+3) + relativedelta(months=+(delta_semestre * 6), days=-1) 
+    data_proximo_backup_semestre = data_inicio + relativedelta(months=+2) + relativedelta(months=+(delta_semestre * 6)) 
     for delta_dia in range(7):
-        data_proximo_backup_dia = data_proximo_backup_semestre + relativedelta(days=-delta_dia)
+        data_proximo_backup_dia = data_proximo_backup_semestre + relativedelta(days=+delta_dia)
         if data_proximo_backup_dia.weekday() == 5:
             agenda_semestre.append(data_proximo_backup_dia)
             break
@@ -46,10 +46,10 @@ for delta_semestre in range(0, semestres):
 # agenda de backups mensal dentro do interstício 
 agenda_mes = []
 meses = ((data_fim.year - data_inicio.year) * 12 + (data_fim.month - data_inicio.month))
-for delta_mes in range(1, meses + 1):
-    data_proximo_backup_mes = data_inicio + relativedelta(months=+delta_mes, days=-1)
+for delta_mes in range(0, meses):
+    data_proximo_backup_mes = data_inicio + relativedelta(months=+delta_mes)
     for delta_dia in range(7):
-        data_proximo_backup_dia = data_proximo_backup_mes + relativedelta(days=-delta_dia)
+        data_proximo_backup_dia = data_proximo_backup_mes + relativedelta(days=+delta_dia)
         if data_proximo_backup_dia.weekday() == 5:
             agenda_mes.append(data_proximo_backup_dia)
             break
